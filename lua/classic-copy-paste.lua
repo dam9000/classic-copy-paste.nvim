@@ -109,6 +109,19 @@ function M.setup(opts)
   --]]
   vim.keymap.set('c', '<S-Insert>', '<C-R>+', { desc='Paste' })
 
+  -- ctrl-insert, shift-insert likely can't be intercepted in terminal mode
+  -- as an alternative assign alt-c, alt-v
+  if opts and (opts.alt_cv == false) then
+    -- skip
+  else
+    -- alt-c - Copy
+    vim.keymap.set('v', '<M-c>', '"+y', { desc='Copy' })
+    -- alt-v - Paste
+    vim.keymap.set('',  '<M-v>', '"+gP', { desc='Paste' })
+    vim.keymap.set('i', '<M-v>', M.insert_paste, { desc='Paste' })
+    vim.keymap.set('c', '<M-v>', '<C-R>+', { desc='Paste' })
+  end
+
 end
 
 return M
